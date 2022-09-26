@@ -1,0 +1,23 @@
+.theme-info-verification {
+  display: flex;
+  flex-direction: column;
+
+  &-description-content {
+    flex-grow: 1;
+  }
+
+  &-cta {
+    margin: 0 auto $spacing-l auto;
+    row-gap: $spacing-s ;
+    width: 19rem;
+  }
+
+  a {
+    span {
+      align-items: center;
+      display: flex;
+      height: 100%;
+      justify-content: center;
+    }
+  }
+}

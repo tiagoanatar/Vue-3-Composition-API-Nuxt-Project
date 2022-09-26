@@ -1,0 +1,22 @@
+/**
+* TODO: Temporary styling. Need to remove once the widget for footer is ready
+**/
+.theme-loan-reapply-bank-information {
+  &-form-submit-button {
+    margin-bottom: $spacing-l;;
+  }
+
+  @include media-breakpoint-down(md) {
+    footer {
+      align-items: center;
+      display: flex;
+      justify-content: center;
+      margin-bottom: $spacing-xl;
+      margin-top: 0;
+    }
+
+    .nav {
+      display: none;
+    }
+  }
+}

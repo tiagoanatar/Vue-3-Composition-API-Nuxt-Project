@@ -1,0 +1,4 @@
+istioAllowPaths: 
+  - auth: open
+    paths: ["/"]
+    methods: ["GET"]

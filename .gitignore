@@ -1,0 +1,53 @@
+.DS_Store
+node_modules
+/dist
+.output
+.nuxt
+nuxt.d.ts
+.stylelintcache
+
+yarn.lock
+
+# local env files
+ecosystem.config.js
+.env
+.env.local
+.env.*.local
+
+# Log files
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Testing
+coverage
+
+# Other
+*.todo
+
+# From repo setup
+.architect
+bootstrap.css
+bootstrap.js
+bootstrap.json
+bootstrap.jsonp
+build/
+classic.json
+classic.jsonp
+ext/
+modern.json
+modern.jsonp
+resources/sass/.sass-cache/
+resources/.arch-internal-preview.css
+.arch-internal-preview.css

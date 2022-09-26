@@ -1,0 +1,48 @@
+.theme-loan-application-body-copy {
+  h1 {
+    letter-spacing: -0.0425rem;
+  }
+
+  p {
+    @include media-breakpoint-up(md) {
+      font-size: 1rem;
+      padding-right: $spacing-3xl;
+    }
+  }
+
+  &-center {
+    > * {
+      @include media-breakpoint-up(md) {
+        text-align: center;
+      }
+    }
+
+    p {
+      @include media-breakpoint-up(md) {
+        padding-right: 0;
+      }
+    }
+  }
+
+  &-transparent {
+    text-align: center;
+
+    p {
+      font-size: $font-size-mdl;
+    }
+  }
+
+  h1,
+  h2,
+  p {
+    margin-bottom: $spacing-m;
+
+    @include media-breakpoint-up(md) {
+      margin-bottom: $spacing-l;
+    }
+  }
+
+  &-bold {
+    font-weight: $theme-font-weight-bold;
+  }
+}

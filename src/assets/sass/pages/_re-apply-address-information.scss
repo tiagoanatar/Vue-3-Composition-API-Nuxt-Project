@@ -1,0 +1,24 @@
+.theme-re-apply-address {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+
+  @include media-breakpoint-up(md) {
+    min-height: 44.5rem;
+  }
+
+  .theme-loan-application-info-modal {
+    margin: (-$spacing-s) 0 $spacing-l;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  &-footer {
+    margin-bottom: $spacing-l;
+    text-align: center;
+  }
+}

@@ -1,0 +1,117 @@
+---
+name: 'Deploy Feature Branch to Dev'
+
+on:
+  push:
+    branches:
+      - '!dev'
+      - '!qa'
+      - '!prod'
+      - '!stage'
+      - '!master'
+      - '!develop'
+      - '!release'
+      - '!main'
+      - '!badges'
+      - sprint-release
+      - devops/*
+env:
+  ECR_REGISTRY: 839533991848.dkr.ecr.us-east-1.amazonaws.com
+
+jobs:
+  build:
+    name: Build and Publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v2
+
+      - name: normalize data
+        uses: ./.github/actions/per-branch-env-action
+        id: data
+
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: get state repo
+        uses: actions/checkout@master
+        with:
+          repository: teampurpose/cicd-products-services-state
+          ref: dev
+          path: ./deploy-charts
+          token: ${{ secrets.STATE_PAT}}
+
+      - name: login to amazon ecr
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: prep ecr repository
+        id: ecr-verify-created
+        uses: int128/create-ecr-repository-action@v1
+        with:
+          repository: ${{steps.data.outputs.FE_REPOSITORY}}
+          lifecycle-policy: deploy-charts/ecr.lifecycle-fb.json
+
+      - name: build docker image
+        run: docker build -t ${ECR_REGISTRY}/${GITHUB_REPOSITORY}:${{steps.data.outputs.DOCKER_TAG}} --build-arg FE_HOST=${{ steps.data.outputs.FE_HOST_PREFIX }}.dev.c.pfcld.com -f Dockerfile-dev .
+
+      - name: push docker images
+        run: docker image push ${ECR_REGISTRY}/${GITHUB_REPOSITORY}:${{steps.data.outputs.DOCKER_TAG}}
+
+  deploy:
+    name: Deploy FB to Dev
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: normalize data
+        uses: ./.github/actions/per-branch-env-action
+        id: data
+
+      - name: update okta client
+        id: okta
+        uses: ./.github/actions/okta-app-client
+        with:
+          host: ${{ steps.data.outputs.FE_HOST_PREFIX }}.dev.c.pfcld.com
+          okta-api-token: ${{ secrets.OKTA_API }}
+
+      - name: okta client update response
+        run: echo ${{ steps.okta.outputs.okta-response }}
+
+      - name: update host name
+        run: |
+          cd ./helm
+          sed -i 's/HOST/${{ steps.data.outputs.FE_HOST_PREFIX }}/g' values.yaml
+          sed -i 's/PM2_CONFIG/${{ steps.data.outputs.HELM_RELEASE_NAME }}-fb-pm2-config-and-env-vars/g' values.yaml
+          sed -i 's/TAG/${{ steps.data.outputs.DOCKER_TAG }}/g' values.yaml
+
+      - name: get state repo
+        uses: actions/checkout@master
+        with:
+          repository: teampurpose/cicd-products-services-state
+          ref: dev
+          path: ./deploy-charts
+          token: ${{ secrets.STATE_PAT}}
+
+      - name: update deployment tag in state
+        run: |
+          cd ./deploy-charts  
+          pip install ruamel.yaml parse fire
+          ./release create-frontend "${{ steps.data.outputs.HELM_RELEASE_NAME }}" "${GITHUB_REPOSITORY}" ${{ steps.data.outputs.DOCKER_TAG }}
+
+      - name: Deploy to dev with update to dev state
+        uses: EndBug/add-and-commit@v7
+        with:
+          cwd: ./deploy-charts
+          author_name: Actions Pipeline
+          author_email: systemsupport@teampurpose.com
+          message: 'release to dev'
+          add: 'services'
+          pull_strategy: NO-PULL
+          branch: dev
+          push: origin dev --force

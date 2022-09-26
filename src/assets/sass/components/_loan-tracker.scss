@@ -1,0 +1,47 @@
+.theme-loan-card-tracker {
+  padding: $spacing-m;
+
+  &-instant,
+  &-store {
+    .progress-bar-indicator::before {
+      background: $aa-green;
+    }
+  }
+
+  &-next-day {
+    .progress-bar-indicator::before {
+      background: $aa-goldenrod;
+    }
+  }
+
+  button {
+    background: none;
+    border: none;
+  }
+
+  &-modal {
+    align-items: center;
+    column-gap: $spacing-s;
+    display: flex;
+    margin-bottom: $spacing-s;
+
+    p {
+      align-items: center;
+      font-family: $theme-font-family-base;
+      font-size: $font-size-xs;
+      font-weight: $theme-font-weight-bold;
+      margin-bottom: -($spacing-xs);
+    }
+  }
+
+  .theme-key-value-text {
+    margin-top: $spacing-s;
+
+    &-label,
+    .theme-key-value-text-value,
+    .theme-key-value-text-more-link {
+      font-size: $font-size-xs;
+      font-weight: $theme-font-weight-light;
+    }
+  }
+}

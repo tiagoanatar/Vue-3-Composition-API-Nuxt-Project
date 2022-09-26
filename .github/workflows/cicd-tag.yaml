@@ -1,0 +1,85 @@
+name: Tag Release
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to tag this release'
+        required: true
+        default: 'v0.0.1'
+env:
+  ECR_REGISTRY: 839533991848.dkr.ecr.us-east-1.amazonaws.com
+jobs:
+  tagrelease:
+    name: Tag Release
+    runs-on: ubuntu-latest
+    environment:
+      name: tag
+    steps:
+      - uses: actions/checkout@v2
+        # checks out the repo in preparation for build
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: Login to Amazon ECR
+        # prepare credentials to push to ECR deployment artifact repository  step 2
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: tag docker image
+        #run: docker tag ${ECR_REGISTRY}/${GITHUB_REPOSITORY}:tag-${GITHUB_SHA} ${ECR_REGISTRY}/${GITHUB_REPOSITORY}:${{ github.event.inputs.version }}
+        run: docker buildx imagetools create ${ECR_REGISTRY}/${GITHUB_REPOSITORY}:tag-${GITHUB_SHA} --tag ${ECR_REGISTRY}/${GITHUB_REPOSITORY}:${{github.event.inputs.version}}
+
+      - name: Merge to master
+        # deploy is as easy as updating state branches.  the rancher CD watches for state changes and implements the versions desired.
+        uses: EndBug/add-and-commit@v7
+        with:
+          author_name: Actions Pipeline
+          author_email: systemsupport@teampurpose.com
+          message: 'release planned'
+          add: '.'
+          branch: master
+          tag: ${{ github.event.inputs.version }}
+          push: origin release
+
+  relasetoprod:
+    name: Release to Prod
+    runs-on: ubuntu-latest
+    needs: tagrelease
+    environment:
+      name: prodrelease
+    steps:
+      - uses: actions/checkout@v2
+        # checks out the repo in preparation for build
+
+      - name: get state repo
+        uses: actions/checkout@master
+        with:
+          repository: teampurpose/cicd-products-services-state
+          ref: prod
+          path: ./deploy-charts
+          token: ${{ secrets.STATE_PAT}}
+
+      - name: update deployment tag in state
+        # release-helm is the script that updates the helm chart with the version just built
+        run: |
+          cd ./deploy-charts
+          pip install ruamel.yaml parse fire
+          #./release-helm ${GITHUB_REPOSITORY}
+          ./release create-frontend $(cut -d'/' -f2 <<<"${GITHUB_REPOSITORY}") "${GITHUB_REPOSITORY}" ${{github.event.inputs.version}}
+      - name: Deploy to production with update to production state
+        # deploy is as easy as updating state branches.  the rancher CD watches for state changes and implements the versions desired.
+        uses: EndBug/add-and-commit@v7
+        with:
+          cwd: ./deploy-charts
+          author_name: Actions Pipeline
+          author_email: systemsupport@teampurpose.com
+          message: 'release to production'
+          add: 'services'
+          pull: NO-PULL
+          branch: prod
+          push: origin prod --force

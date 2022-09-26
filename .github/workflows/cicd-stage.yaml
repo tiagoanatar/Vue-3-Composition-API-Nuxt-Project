@@ -1,0 +1,95 @@
+name: Create Release
+
+on:
+  push:
+    branches: [release]
+
+jobs:
+  deploystage:
+    name: Deploy to Stage
+    runs-on: ubuntu-latest
+    environment:
+      name: stage
+    steps:
+      - uses: actions/checkout@v2
+        # checks out the repo in preparation for build
+
+      - name: get state repo
+        uses: actions/checkout@master
+        with:
+          repository: teampurpose/cicd-products-services-state
+          ref: stage
+          path: ./deploy-charts
+          token: ${{ secrets.STATE_PAT}}
+
+      - name: update deployment tag in state
+        # release-helm is the script that updates the helm chart with the version just built
+        run: |
+          cd ./deploy-charts
+          pip install ruamel.yaml parse fire
+          #./release-helm ${GITHUB_REPOSITORY}
+          ./release create-frontend $(cut -d'/' -f2 <<<"${GITHUB_REPOSITORY}") "${GITHUB_REPOSITORY}" "tag-"`cat ./target/image`
+
+      - name: Deploy to stage with update to stage state
+        # deploy is as easy as updating state branches.  the rancher CD watches for state changes and implements the versions desired.
+        uses: EndBug/add-and-commit@v7
+        with:
+          cwd: ./deploy-charts
+          author_name: Actions Pipeline
+          author_email: systemsupport@teampurpose.com
+          message: 'release to stage'
+          add: 'services'
+          pull: NO-PULL
+          branch: stage
+          push: origin stage --force
+
+  signoff:
+    name: QA Stage Signoff
+    needs: deploystage
+    runs-on: ubuntu-latest
+    environment:
+      name: stagesignoff
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.STATE_PAT}} # checkout as ss so it triggers the later stages
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
+      - uses: actions/checkout@v2
+        # checks out the repo in preparation for build
+
+      #- name: Merge to master
+      #  # deploy is as easy as updating state branches.  the rancher CD watches for state changes and implements the versions desired.
+      #  uses: EndBug/add-and-commit@v7
+      #  with:
+      #    author_name: Actions Pipeline
+      #    author_email: systemsupport@teampurpose.com
+      #    message: 'qa approved for master'
+      #    add: '.'
+      #    branch: master
+      #    push: origin master
+
+      - name: Merge to Master
+        run: |
+          git config --local user.email "systemsupport@teampurpose.com"
+          git config --local user.name "Actions Pipeline"    
+          git fetch --unshallow
+          git checkout master
+          git pull
+          git merge --no-ff $GITHUB_SHA -m "Stage signedoff"
+          git push
+
+      - name: Notify Release
+        uses: dawidd6/action-send-mail@v3.5.0
+        with:
+          server_address: ${{ secrets.EMAIL_SERVER }}
+          server_port: ${{ secrets.EMAIL_PORT }}
+          username: ${{ secrets.EMAIL_USERNAME }}
+          password: ${{ secrets.EMAIL_PASSWORD }}
+          subject: '[${{github.repository}}] Pipeline.  Build approved for Tagging'
+          from: Pipeline workflow
+          to: brkennedy@teampurpose.com
+          body: |-
+            Please version the latest approvals of ${{github.repository}}
+            Inspect the commits for latest updates ${{github.server_url}}/${{github.repository}}/commits/master 
+            and create your version tag at ${{github.server_url}}/${{github.repository}}/actions/workflows/cicd-tag.yaml

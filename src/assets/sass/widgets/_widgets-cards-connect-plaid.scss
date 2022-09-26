@@ -1,0 +1,54 @@
+.theme-verify-plaid-card {
+  background-color: $aa-day-blue-light;
+  border: none;
+  padding: $spacing-xl $spacing-m;
+
+  .card-body {
+    padding: 0;
+  }
+
+  h2 {
+    font-size: $font-size-mdl;
+  }
+
+  p {
+    margin-bottom: $spacing-xl;
+  }
+
+  a {
+    align-self: baseline;
+  }
+
+  .accordion-item {
+    border: none;
+
+    p {
+      margin: 0;
+    }
+  }
+
+  .accordion-button {
+    background-color: $aa-day-blue-light;
+    box-shadow: none;
+    font-weight: $theme-font-weight-bold;
+    padding: 0;
+
+    &::after {
+      margin-left: $spacing-s;
+    }
+  }
+
+  .accordion-body {
+    background-color: $aa-day-blue-light;
+    padding: $spacing-xl 0 0 0;
+
+    ul {
+      margin: 0;
+      padding-left: $spacing-m;
+
+      li {
+        list-style: disc;
+      }
+    }
+  }
+}

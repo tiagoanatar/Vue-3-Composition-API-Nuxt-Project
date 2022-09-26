@@ -1,0 +1,43 @@
+.theme-update-application {
+  // TODO: should be removed once we have common description styling
+  .theme-widget-description-update-contact-info {
+    margin-top: $spacing-xl;
+
+    @include media-breakpoint-up(md) {
+      margin-top: $spacing-3xl;
+    }
+  }
+
+  // TODO: should be removed once we have common Header block
+  .navbar-brand {
+    display: none;
+
+    @include media-breakpoint-up(md) {
+      display: inline;
+    }
+  }
+
+  .theme-input-wrapper {
+    margin-bottom: $spacing-xl;
+
+    &-update-dob {
+      display: none;
+    }
+
+    &-update-current-phone {
+      margin-bottom: $spacing-s;
+    }
+  }
+
+  // TODO: Need to remove or make changes once common class for submit button is created
+  .theme-widget-cta-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 $spacing-l;
+  }
+
+  footer {
+    margin-top: 0;
+  }
+}

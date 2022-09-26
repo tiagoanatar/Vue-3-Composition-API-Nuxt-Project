@@ -1,0 +1,78 @@
+.theme-btn {
+  height: 48px;
+  min-width: $pf-btn-min-width-sm;
+
+  &.btn-primary {
+    background: $aa-goldenrod;
+    background-image: $aa-y-gradient;
+    border: transparent;
+    box-shadow: $pf-box-shadow;
+    color: $aa-black-blue;
+
+    &:hover {
+      background: $aa-goldenrod;
+      box-shadow: $pf-box-shadow-inset;
+      color: $aa-black-blue;
+    }
+  }
+
+  &.btn-secondary {
+    @include btn-secondary;
+
+    path {
+      stroke: $white;
+    }
+  }
+
+  &.btn-primary.disabled {
+    background: $aa-marble;
+    color: $aa-grey;
+
+    path {
+      stroke: $aa-grey;
+    }
+  }
+
+  &.btn-outline-primary {
+    box-shadow: $pf-box-shadow;
+    color: $aa-dark-blue;
+
+    &:hover {
+      background: $aa-day-blue;
+      box-shadow: $pf-box-shadow-inset;
+    }
+
+    &.disabled {
+      border-color: $aa-grey;
+      color: $aa-grey;
+
+      path {
+        stroke: $aa-grey;
+      }
+    }
+  }
+
+  &.btn-sm {
+    height: 40px;
+  }
+
+  .spinner-border {
+    vertical-align: middle;
+  }
+
+  @include media-breakpoint-down(sm) {
+    min-width: $pf-btn-min-width-xs;
+  }
+}
+
+// Slide button
+.nav-pills {
+  background-color: $aa-marble;
+  border-radius: $theme-btn-nav-pills-border-radius;
+  padding: $spacing-xs;
+
+  .nav-link {
+    border-radius: $theme-btn-nav-pills-border-radius;
+    color: $aa-dark-blue;
+  }
+}

@@ -1,0 +1,131 @@
+.theme-landing-page {
+  background: $aa-y-gradient;
+
+  .theme-landing-container {
+    background-image: url('@/assets/images/logo-mark-light.svg');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: 160%;
+
+    @include media-breakpoint-up(md) {
+      background-position: bottom 10% right -40%;
+      background-size: auto;
+    }
+  }
+
+  &-button-group {
+    column-gap: .5rem;
+    display: flex;
+    flex-flow: wrap;
+
+    @include media-breakpoint-up(md) {
+      justify-content: center;
+      margin-bottom: 4.0625rem;
+    }
+
+    a.btn-outline-primary {
+      background-color: $white;
+      display: inline-flex;
+
+      @include media-breakpoint-up(md) {
+        display: none;
+      }
+    }
+
+    a.btn-primary {
+      display: none;
+
+      @include media-breakpoint-up(md) {
+        display: inline-flex;
+      }
+    }
+
+    .btn {
+      align-items: center;
+      display: inline-flex;
+      font-weight: $theme-btn-font-weight;
+      justify-content: center;
+    }
+  }
+
+  .theme-logo-mobile {
+    max-height: 3vh;
+    max-width: 44vw;
+  }
+
+  .row {
+    min-height: 100vh;
+  }
+
+  .card {
+    background-color: transparent;
+    border: 0;
+    border-radius: $border-radius-lg;
+    max-width: none;
+
+    @include media-breakpoint-up(md) {
+      background-color: $white;
+      color: $theme-body-color;
+      text-align: center;
+      width: 576px;
+    }
+  }
+
+  .card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 75vh;
+    padding: 1rem 2rem 0 0;
+
+    @include media-breakpoint-up(md) {
+      display: block;
+      min-height: auto;
+      padding: 1rem 6.5rem;
+    }
+  }
+
+  .card-title {
+    font-size: 2.5rem;
+    letter-spacing: -0.02em;
+    margin-bottom: 1rem;
+
+    @include media-breakpoint-up(md) {
+      font-size: 3rem;
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  .card-text {
+    font-size: 1.125rem;
+    margin-bottom: 2.0625rem;
+
+    @include media-breakpoint-up(md) {
+      font-size: 1rem;
+      margin-bottom: 4.5rem;
+    }
+  }
+
+  .card-header,
+  .card-footer {
+    background-color: transparent;
+    border: 0;
+  }
+
+  .card-header {
+    text-align: center;
+
+    @include media-breakpoint-up(md) {
+      padding: 3.9375rem 1rem 3.5625rem;
+    }
+  }
+
+  .card-footer {
+    display: none;
+
+    @include media-breakpoint-up(md) {
+      display: block;
+      padding: 0 3.5rem 3.5rem;
+    }
+  }
+}

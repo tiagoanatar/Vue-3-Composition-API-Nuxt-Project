@@ -1,0 +1,115 @@
+@mixin btn-primary {
+  background: $aa-goldenrod;
+  background-image: $aa-y-gradient;
+  border: transparent;
+  box-shadow: $pf-box-shadow;
+  color: $aa-black-blue;
+
+  &:hover {
+    background: $aa-goldenrod;
+    box-shadow: $pf-box-shadow-inset;
+    color: $aa-black-blue;
+  }
+
+  &.disabled {
+    background: $aa-marble;
+    color: $aa-grey;
+  }
+}
+
+@mixin btn-secondary {
+  background: $aa-dark-blue;
+  border: transparent;
+  box-shadow: $pf-box-shadow;
+  color: $white;
+
+  &:hover {
+    background: $aa-black-blue;
+    box-shadow: $pf-box-shadow-inset;
+  }
+}
+
+@mixin link-primary {
+  color: $aa-black-blue;
+  text-decoration: underline;
+
+  &:hover {
+    color: $aa-black-blue;
+    text-decoration: underline;
+  }
+}
+
+// TODO: Find similar styles and replace with this mixin.
+@mixin link-primary-bold {
+  color: $aa-dark-blue;
+  font-family: $theme-font-family-secondary;
+  font-weight: $theme-font-weight-bold;
+  letter-spacing: 0.5px;
+  text-decoration: underline;
+}
+
+@mixin badge-status-variations($variation-bg, $variation-indicator) {
+  background-color: $variation-bg;
+
+  &::before {
+    width: $spacing-s;
+    height: $spacing-s;
+
+    // defines color of the status indicator
+    background-color: $variation-indicator;
+    border-radius: 50%;
+    content: '';
+    display: inline-block;
+    margin-right: $spacing-xs;
+  }
+}
+
+@mixin ellipses($max-width: 100%) {
+  max-width: $max-width;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin summary-screen-card-with-background {
+  background-color: $aa-day-blue-lighter;
+  border-radius: $theme-border-radius;
+  padding: $spacing-xxl $spacing-3xl;
+
+  @include media-breakpoint-down(md) {
+    padding: 0 $spacing-m;
+  }
+}
+
+@mixin cta-card {
+  .card {
+    background-color: $aa-day-blue-light;
+    border: none;
+    box-shadow: $pf-box-shadow;
+    margin-bottom: $spacing-m;
+    padding: 0;
+    width: 100%;
+
+    .card-body {
+      padding: $spacing-l $spacing-m;
+    }
+
+    .theme-key-value-text {
+      align-items: center;
+
+      &-label {
+        margin: 0;
+      }
+    }
+
+    p {
+      font-size: $font-size-sm;
+      font-weight: $theme-font-weight-bold;
+      margin: 0;
+    }
+
+    button {
+      padding: 0;
+    }
+  }
+}

@@ -1,0 +1,83 @@
+.theme-manage-employment {
+  min-height: 100%;
+
+  @include media-breakpoint-up(md) {
+    min-height: 44.5rem;
+  }
+
+  &-description {
+    margin-bottom: $spacing-l;
+
+    @include media-breakpoint-up(md) {
+      margin-bottom: $spacing-xl;
+    }
+
+    h1 {
+      margin-bottom: $spacing-m;
+    }
+
+    p {
+      font-size: $font-size-md;
+      margin-bottom: 0;
+
+      @include media-breakpoint-up(md) {
+        padding-right: $spacing-3xl;
+      }
+    }
+  }
+
+  &-cta-block {
+    margin: $spacing-xl auto $spacing-l auto;
+    max-width: 100%;
+    width: 19rem;
+
+    @include media-breakpoint-up(md) {
+      padding: 0;
+    }
+  }
+
+  .theme-add-income-summary {
+    margin-top: $spacing-s;
+
+    @include media-breakpoint-up(md) {
+      margin-top: 0;
+    }
+
+    a {
+      font-weight: $theme-font-weight-bold;
+    }
+  }
+
+  /**
+  *  TODO: Temporary styling to Footer. Need to remove once the widget for footer is ready
+  **/
+
+  footer {
+    .nav-item {
+      .nav-link {
+        margin: 0 $spacing-s;
+        padding: 0;
+      }
+
+      &:last-child {
+        .nav-link {
+          margin-right: 0;
+        }
+      }
+    }
+  }
+
+  @include media-breakpoint-down(md) {
+    footer {
+      align-items: center;
+      display: flex;
+      justify-content: center;
+      margin-bottom: $spacing-xl;
+      margin-top: 0;
+    }
+
+    .nav {
+      display: none;
+    }
+  }
+}

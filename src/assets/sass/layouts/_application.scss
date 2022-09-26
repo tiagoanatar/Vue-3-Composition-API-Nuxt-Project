@@ -1,0 +1,45 @@
+.theme-layout-application {
+  min-height: 100vh;
+
+  @include media-breakpoint-up(md) {
+    padding-bottom: $spacing-3xl;
+    padding-top: $spacing-3xl;
+  }
+
+  @include media-breakpoint-up(md) {
+    background-color: $aa-day-blue-light;
+  }
+
+  main {
+    height: 100%;
+    min-height: calc(50.75rem - 6.25rem);
+  }
+
+  &-inner-container {
+    background-color: $white;
+    height: 100vh;
+    padding: $spacing-l;
+
+    @include media-breakpoint-up(md) {
+      width: 36rem;
+      height: auto;
+      border-radius: $border-radius-lg;
+      padding: $spacing-3xl;
+    }
+  }
+}
+
+/**
+* Secondary layout will remove only padding and other style will inherit
+* from the  from the ".theme-layout-application" inner container for now.
+*/
+
+.theme-layout-application-secondary {
+  .theme-layout-application-inner-container {
+    padding: 0;
+  }
+}
+
+.theme-layout-dashboard-offers {
+  background-color: $aa-day-blue-light;
+}

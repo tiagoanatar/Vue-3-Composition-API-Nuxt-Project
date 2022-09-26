@@ -1,0 +1,31 @@
+name: "Generate Badges"
+on:
+  schedule:
+    - cron: '0 0 * * *'
+
+jobs:
+  get-badges:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - name: setup node version 16.3.0
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16.13.0'
+      - run: npm install
+      - id: libyear
+        uses: s0/libyear-node-action@develop
+      - run: mkdir badges
+      - uses: emibcn/badge-action@v1
+        with:
+          label: 'libyear'
+          status: ${{ steps.libyear.outputs.drift }} year(s) behind
+          color: 'blue'
+          path: 'badges/drift.svg'
+      - uses: s0/git-publish-subdir-action@develop
+        env:
+          REPO: self
+          BRANCH: badges
+          FOLDER: badges
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SQUASH_HISTORY: true

@@ -1,0 +1,38 @@
+.theme-disclosure {
+  margin-bottom: $spacing-3xl;
+
+  &-bottom-margin {
+    margin-bottom: $spacing-m;
+  }
+
+  &-bottom-margin-small {
+    margin-bottom: $spacing-xs;
+  }
+
+  &-bottom-margin-large {
+    margin-bottom: $spacing-xl;
+  }
+
+  &-container {
+    margin-bottom: $spacing-m;
+  }
+
+  &-center-text {
+    text-align: center;
+  }
+
+  &-form-title {
+    font-weight: bold;
+    margin-bottom: $spacing-m;
+  }
+
+  &-link {
+    cursor: pointer;
+    font-weight: $theme-font-weight-bold;
+    text-decoration: underline;
+  }
+
+  &-small-text {
+    font-size: $font-size-xs;
+  }
+}

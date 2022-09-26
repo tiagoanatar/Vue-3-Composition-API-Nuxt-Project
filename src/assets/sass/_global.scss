@@ -1,0 +1,15 @@
+// GLOBAL STYLES
+body {
+  min-height: 100vh;
+  word-break: break-word;
+}
+
+// TODO:  currently global navigation is used for dashboard only,
+// below scope should be changed if navigation is handled in other pages
+.theme-dashboard {
+  padding-top: $theme-naviagtion-padding-top-mobile;
+
+  @include media-breakpoint-up(lg) {
+    padding-top: $theme-naviagtion-padding-top-desktop;
+  }
+}

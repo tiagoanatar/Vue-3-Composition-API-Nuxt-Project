@@ -1,0 +1,24 @@
+FROM node:16.13.0
+
+ARG FE_HOST
+
+LABEL maintainer="jvinagr@teampurpose.com"
+LABEL version="1.0"
+LABEL description="aa-frontend-app \
+docker image."
+
+ADD . /app
+
+WORKDIR /app
+
+RUN npm install
+RUN npm run build
+RUN echo "$FE_HOST"
+RUN npm install pm2@latest -g
+
+ENV HOST 0.0.0.0
+ENV FE_HOST="$FE_HOST"
+
+EXPOSE 3000
+
+ENTRYPOINT ["/app/entrypoint.sh"]

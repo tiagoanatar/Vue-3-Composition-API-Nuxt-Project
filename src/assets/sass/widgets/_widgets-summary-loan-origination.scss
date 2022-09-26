@@ -1,0 +1,163 @@
+.theme-loan-origination-header {
+  @include media-breakpoint-up(md) {
+    background: $aa-day-blue url('@/assets/images/modal_bg.png') 40rem 7rem no-repeat;
+    border-radius: $theme-border-radius-lg;
+    margin-bottom: $spacing-3xl;
+    padding: $spacing-xxl $spacing-3xl;
+    position: relative;
+
+    h1 {
+      font-size: $font-size-xxl;
+      margin-top: $spacing-l;
+    }
+
+    &-description {
+      padding-top: $spacing-l;
+    }
+
+    &-float {
+      left: 0;
+      padding: $spacing-xxl $spacing-3xl;
+      position: absolute;
+      top: 0;
+      width: 100%;
+    }
+
+    &-small-logo-mobile {
+      display: none;
+    }
+
+  }
+
+  @include media-breakpoint-down(md) {
+    .col-3,
+    &-small-logo-desktop {
+      display: none;
+    }
+  }
+}
+
+.theme-loan-origination {
+  padding-top: $spacing-l;
+
+  .theme-loan-origination-summary {
+    @include media-breakpoint-down(md) {
+      border-top: 1px solid $aa-marble;
+      margin-top: $spacing-m;
+      padding-top: $spacing-xl;
+    }
+
+    &-headline {
+      font-size: $font-size-lg;
+      margin-bottom: $spacing-m;
+
+      @include media-breakpoint-down(md) {
+        font-size: $font-size-md;
+      }
+    }
+
+    &-card {
+      background-color: $aa-day-blue-lighter;
+      border-radius: $theme-border-radius $theme-border-radius 0 0;
+      padding: $spacing-m $spacing-m $spacing-xs;
+
+      @include media-breakpoint-down(md) {
+        background-color: $aa-day-blue-light;
+      }
+
+      dt {
+        font-weight: normal;
+      }
+
+      dd {
+        font-weight: $theme-font-weight-bold;
+      }
+    }
+
+    &-card-header {
+      border-bottom: 1px solid $aa-day-blue;
+      margin-bottom: $spacing-xs;
+      padding-top: $spacing-s;
+
+      dt {
+        font-size: $font-size-xs;
+        margin-bottom: $spacing-s;
+      }
+
+      dd {
+        font-size: $font-size-md;
+      }
+    }
+
+    &-card-body {
+      border-bottom: 1px solid $aa-day-blue;
+      margin-bottom: $spacing-xs;
+      padding-bottom: $spacing-xs;
+      padding-top: $spacing-m;
+    }
+
+    &-card-final {
+      padding-top: $spacing-m;
+    }
+
+    &-pair-items {
+      dl {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+      }
+
+      dt,
+      dd {
+        width: 50%;
+      }
+
+      dd {
+        text-align: right;
+      }
+
+      &-large span {
+        font-size: $font-size-md;
+        font-weight: $theme-font-weight-bold;
+      }
+    }
+
+    .theme-loan-origination-summary-footer {
+      background: $aa-day-blue;
+      border-radius: 0 0 $theme-border-radius $theme-border-radius;
+      box-shadow: $pf-box-shadow;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: $spacing-m;
+      padding: $spacing-m;
+
+      a {
+        cursor: pointer;
+
+        @extend .link-primary;
+      }
+
+      span {
+        display: flex;
+        gap: $spacing-m;
+      }
+    }
+
+    .theme-loan-origination-summary-form {
+      @include summary-screen-card-with-background;
+    }
+
+    &-input-agreement {
+      padding-bottom: $spacing-l;
+    }
+
+    .theme-loan-origination-summary-button {
+      text-align: center;
+
+      button {
+        width: 19rem;
+      }
+    }
+  }
+
+}

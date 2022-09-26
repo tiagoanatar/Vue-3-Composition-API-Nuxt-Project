@@ -1,0 +1,42 @@
+.theme-payment-method-card {
+  border-bottom: 1px solid $aa-marble;
+
+  &-description {
+    p {
+      margin-bottom: $spacing-s;
+    }
+
+    &-title {
+      font-size: $font-size-md;
+      font-weight: $theme-font-weight-bold;
+    }
+
+    &-status {
+      padding-bottom: $spacing-l;
+
+      &.active-text {
+        color: $aa-green;
+      }
+
+      &.error-text {
+        color: $aa-red;
+      }
+    }
+  }
+
+  &-action {
+    &-link {
+      color: $aa-dark-blue;
+      font-size: $font-size-md;
+    }
+  }
+
+  &-delete-icon {
+    cursor: pointer;
+
+    &-disable {
+      cursor: default;
+      pointer-events: none;
+    }
+  }
+}

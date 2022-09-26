@@ -1,0 +1,47 @@
+name: 'Clean FB Deploy to Dev'
+
+on:
+  pull_request_target:
+    types: [closed]
+    branches: [sprint-release]
+
+jobs:
+  clean:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v2
+
+      - name: normalize data
+        uses: ./.github/actions/per-branch-env-action # Uses an action in the root directory
+        id: data
+
+      - name: get state repo
+        uses: actions/checkout@master
+        with:
+          repository: teampurpose/cicd-products-services-state
+          ref: dev
+          path: ./deploy-charts
+          token: ${{ secrets.STATE_PAT}}
+
+      - name: clean release
+        id: cleanrelease
+        run: |
+          cd ./deploy-charts
+          pip install ruamel.yaml parse
+          output=$(./clean-helm-release --release ${{steps.data.outputs.HELM_RELEASE_NAME}})
+          echo "::set-output name=info::$output"
+
+      - name: Deploy to dev with update to dev state
+        if: ${{steps.cleanrelease.outputs.info == 'release-not-found'}}
+        uses: EndBug/add-and-commit@v7
+        with:
+          cwd: ./deploy-charts
+          author_name: Actions Pipeline
+          author_email: systemsupport@teampurpose.com
+          message: 'delete dev release'
+          add: 'services'
+          pull_strategy: NO-PULL
+          branch: dev
+          push: origin dev --force

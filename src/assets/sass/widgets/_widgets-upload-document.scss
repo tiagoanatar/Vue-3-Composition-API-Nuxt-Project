@@ -1,0 +1,52 @@
+.theme-upload-document {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+
+  @include media-breakpoint-up(md) {
+    min-height: 44.5rem;
+  }
+
+  &-header {
+    a {
+      @include link-primary-bold;
+    }
+  }
+
+  &-body {
+    &-title {
+      font-size: $font-size-lg;
+      margin-bottom: $spacing-m;
+    }
+
+    &-text {
+      font-size: $font-size-md;
+      margin-bottom: $spacing-xxl;
+    }
+  }
+
+  &-content {
+    margin-bottom: $spacing-l;
+  }
+
+  &-cta {
+    flex-direction: column;
+    flex-grow: 1;
+
+    &-button {
+      margin-bottom: $spacing-m;
+
+      span {
+        align-items: center;
+        display: flex;
+        height: 100%;
+        justify-content: center;
+      }
+    }
+  }
+
+  &-footer {
+    font-weight: $theme-font-weight-bold;
+    text-decoration: underline;
+  }
+}

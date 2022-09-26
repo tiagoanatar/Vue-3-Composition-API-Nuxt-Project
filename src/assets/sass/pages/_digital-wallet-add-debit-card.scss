@@ -1,0 +1,15 @@
+.theme-digital-wallet-add-debit-card {
+  &-description {
+    margin-bottom: $spacing-xxl;
+
+    h1 {
+      margin-bottom: $spacing-m;
+    }
+
+    p {
+      font-size: $font-size-md;
+      margin: 0;
+    }
+
+  }
+}

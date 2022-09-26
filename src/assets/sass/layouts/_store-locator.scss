@@ -1,0 +1,60 @@
+.theme-store-locator {
+  min-height: 100vh;
+
+  @include media-breakpoint-up(md) {
+    padding-bottom: $xx-large;
+    padding-top: $xx-large;
+  }
+
+  &-container {
+    height: calc(100vh - 6.25rem);
+    min-height: 53.125rem;
+
+    @include media-breakpoint-down(sm) {
+      padding: 0;
+    }
+  }
+
+  hr {
+    margin-bottom: $large;
+  }
+
+  &-row {
+    height: 100%;
+
+    @include media-breakpoint-down(md) {
+      height: auto;
+      margin: 0;
+    }
+  }
+
+  &-left {
+    background-color: $white;
+    border-radius: $theme-border-radius $theme-border-radius 0 0;
+    margin-top: -$x-small;
+    order: 2;
+    z-index: 1;
+
+    @include media-breakpoint-up(md) {
+      border-radius: 0;
+      margin-top: 0;
+      order: 1;
+    }
+  }
+
+  &-right {
+    order: 1;
+
+    @include media-breakpoint-up(md) {
+      order: 2;
+    }
+
+    @include media-breakpoint-down(sm) {
+      padding: 0;
+    }
+  }
+
+  .theme-input-icon-wrapper {
+    margin-bottom: $large;
+  }
+}

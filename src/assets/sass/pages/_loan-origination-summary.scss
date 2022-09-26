@@ -1,0 +1,7 @@
+.theme-loan-origination {
+  &-summary-container {
+    @include media-breakpoint-down(md) {
+      padding: 0 $spacing-m;
+    }
+  }
+}

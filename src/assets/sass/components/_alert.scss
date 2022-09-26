@@ -1,0 +1,32 @@
+.theme-alert {
+  align-items: center;
+  color: $aa-black-blue;
+  display: flex;
+
+  p {
+    margin: 0;
+  }
+}
+
+.theme-alert-icon {
+  margin-right: $spacing-m;
+}
+
+.theme-alert-lg {
+  padding: $spacing-l;
+
+  .theme-alert-icon {
+    margin-right: $spacing-l;
+  }
+}
+
+.alert-light {
+  background-color: $white;
+  border: 1px solid $aa-grey;
+  color: $aa-black-blue;
+}
+
+.alert-danger {
+  background-color: $aa-red-light;
+  border-color: $aa-red-light;
+}

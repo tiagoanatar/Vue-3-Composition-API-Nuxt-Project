@@ -1,0 +1,14 @@
+favicon.ico
+package.json
+*.png
+*.md
+Dockerfile
+Dockerfile-dev
+Dockerfile-prod
+Makefile
+release-helm
+helm/
+entrypoint.sh
+compose.yaml
+.dockerignore
+localpm2.sh

@@ -1,0 +1,32 @@
+image:
+  repository: REPO
+  tag: TAG
+
+resourceLimitsCpu: 500m
+resourceLimitsMemory: 768Mi
+resourceRequestsCpu: 80m
+resourceRequestsMemory: 512Mi
+
+autoscalingEnabled: true
+autoscalingMinReplicas: 2
+autoscalingMaxReplicas: 6
+autoscalingTargetCPUPercent: 80
+autoscalingTargetMemoryPercent: 80
+
+pm2Config: PM2_CONFIG
+
+serviceType: ClusterIP
+servicePort: 3000
+
+ingressEnabled: true
+ingressAnnotations:
+    kubernetes.io/ingress.class: istio
+    ingress.kubernetes.io/ssl-redirect: "false"
+ingressHosts:
+    - host: HOST
+      paths: ["/"]
+
+istioAllowPaths:
+  - auth: open
+    paths: ["/"]
+    methods: ["GET"]

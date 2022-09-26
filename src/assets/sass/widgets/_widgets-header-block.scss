@@ -1,0 +1,30 @@
+.theme-header-block {
+  display: flex;
+  justify-content: center;
+  margin-left: 0;
+  width: 100%;
+
+  img {
+    display: none;
+
+    @include media-breakpoint-up(md) {
+      display: inline;
+    }
+
+    &:first-child {
+      display: inline;
+
+      @include media-breakpoint-up(md) {
+        display: none;
+      }
+    }
+  }
+}
+
+.theme-header-block-dark {
+  padding: $spacing-xs 0 $spacing-xxl 0;
+
+  @include media-breakpoint-down(md) {
+    text-align: center;
+  }
+}

@@ -1,0 +1,76 @@
+.theme-review-disclosures {
+  min-height: 100%;
+
+  @include media-breakpoint-up(md) {
+    min-height: 44.5rem;
+  }
+
+  &-description {
+    margin-bottom: $spacing-xl;
+
+    h1 {
+      font-size: $font-size-lg;
+      margin-bottom: $spacing-m;
+
+      @include media-breakpoint-up(md) {
+        font-size: $font-size-xl;
+      }
+    }
+
+    p {
+      font-size: $font-size-md;
+      margin-bottom: 0;
+    }
+  }
+
+  &-content {
+    background-color: $aa-day-blue-light;
+    margin: 0 (-$spacing-l) $spacing-m;
+    padding: $spacing-l $spacing-l $spacing-5xl;
+
+    @include media-breakpoint-up(md) {
+      margin: 0  0 $spacing-xl;
+      padding: $spacing-l $spacing-m $spacing-3xl;
+    }
+
+    p,
+    .theme-disclosure-link {
+      margin-bottom: $spacing-m;
+    }
+
+    p {
+      font-size: $font-size-sm;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    .theme-disclosure-link {
+      border: 0;
+      color: $aa-dark-blue;
+      display: block;
+      font-family: $theme-font-family-base;
+      font-weight: $theme-font-weight-bold;
+      padding: 0;
+    }
+
+  }
+
+  &-cta-block {
+    margin: 0 $spacing-s $spacing-l;
+
+    @include media-breakpoint-up(md) {
+      margin: 0 auto $spacing-l;
+      max-width: 100%;
+      padding: 0;
+      width: 12.5rem;
+    }
+
+    a {
+      align-items: center;
+      display: flex;
+      justify-content: center;
+    }
+  }
+}

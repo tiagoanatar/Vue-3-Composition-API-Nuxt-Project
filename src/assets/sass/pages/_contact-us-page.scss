@@ -1,0 +1,82 @@
+.theme-contact-us {
+  &-description {
+    margin-bottom: $spacing-l;
+
+    @include media-breakpoint-up(md) {
+      margin-bottom: $spacing-xl;
+    }
+
+    h1 {
+      margin-bottom: $spacing-m;
+    }
+
+    p {
+      font-size: $spacing-m;
+      line-height: $theme-line-height-md;
+      margin-bottom: 0;
+    }
+  }
+
+  &-content {
+    &-description {
+      margin-bottom: $spacing-m;
+
+      &:last-of-type {
+        margin-bottom: $spacing-xl;
+
+        @include media-breakpoint-up(md) {
+          margin-bottom: $spacing-3xl;
+        }
+      }
+
+      p {
+        font-size: $font-size-md;
+        font-weight: $theme-font-weight-bold;
+        line-height: $theme-line-height-md;
+        margin-bottom: $spacing-s;
+      }
+
+
+      &.first-description-block {
+        p {
+          font-family: $theme-font-family-secondary;
+          font-size: $font-size-mdl;
+          margin-bottom: $spacing-m;
+        }
+      }
+
+      // This is to override the default styling coming from the base component
+      .theme-key-value-text {
+        .theme-key-value-text-label {
+          margin-bottom: $spacing-s;
+        }
+
+        .theme-key-value-text-value {
+          font-family: $theme-font-family-base;
+          font-size: $font-size-sm;
+          font-weight: $theme-font-weight-light;
+        }
+      }
+
+      &:first-of-type {
+        .theme-key-value-text-heading {
+          .theme-key-value-text-label {
+            margin-bottom: $spacing-m;
+          }
+        }
+      }
+    }
+  }
+
+  &-visit-a-store {
+    span {
+      font-size: $font-size-md;
+      font-weight: $theme-font-weight-bold;
+    }
+
+    a {
+      // This is to override the default text decoration of anchor tag to match design
+      text-decoration: none;
+    }
+  }
+}

@@ -1,0 +1,12 @@
+.theme-update-account-address {
+  display: flex;
+  flex-direction: column;
+
+  form {
+    flex-grow: 1;
+  }
+
+  footer {
+    margin-top: $spacing-l;
+  }
+}

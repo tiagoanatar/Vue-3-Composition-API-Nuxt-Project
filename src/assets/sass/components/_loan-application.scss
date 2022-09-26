@@ -1,0 +1,45 @@
+.theme-loan-application {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+
+  @include media-breakpoint-down(sm) {
+    padding-bottom: $spacing-3xl;
+  }
+
+  @include media-breakpoint-up(md) {
+    min-height: calc(50.75rem - 6.25rem);
+  }
+
+  &-container {
+    margin-bottom: $spacing-xl;
+
+    @include media-breakpoint-up(md) {
+      margin-bottom: $spacing-3xl;
+    }
+  }
+
+  &-sub-container {
+    margin-bottom: $spacing-xl;
+
+    @include media-breakpoint-up(md) {
+      margin-bottom: $spacing-xl;
+    }
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    margin-bottom: $spacing-xl;
+
+    .theme-form-footer {
+      margin-top: auto;
+    }
+  }
+
+  // Mimics button default behavior of having vertically centered text
+  a.btn {
+    line-height: 2.5;
+  }
+}

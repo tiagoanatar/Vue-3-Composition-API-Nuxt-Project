@@ -1,0 +1,31 @@
+.theme-file-upload-progress-bar {
+  background-color: $aa-day-blue-lighter;
+  border-radius: $theme-border-radius;
+  padding: $spacing-m $spacing-m $spacing-l $spacing-m;
+  width: 100%;
+
+  &-header {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: $spacing-m;
+  }
+
+  &-percentage {
+    font-size: $font-size-sm;
+    font-weight: $theme-font-weight-bold;
+
+    span {
+      font-size: $font-size-xs;
+      font-weight: $theme-font-weight-light;
+    }
+  }
+
+  &-cancel {
+    padding: 0;
+  }
+
+  .progress-bar-container {
+    width: 100%;
+  }
+}

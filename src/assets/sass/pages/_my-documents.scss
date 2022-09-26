@@ -1,0 +1,76 @@
+.theme-profile-my-documents {
+  .theme-block-row {
+    margin-bottom: $spacing-xl;
+
+    @include media-breakpoint-up(md) {
+      margin-bottom: $spacing-4xl;
+    }
+  }
+
+  h1 {
+    font-size: $font-size-xl;
+  }
+
+  &-contents {
+    h2 {
+      font-size: $font-size-mdl;
+      margin-bottom: $spacing-m;
+    }
+
+    ul {
+      margin-bottom: 0;
+      padding: 0;
+    }
+
+    &-upload {
+      padding-top: $spacing-xl;
+
+      a {
+        margin-left: $spacing-m;
+      }
+    }
+
+    .accordion-body {
+      padding: 0;
+
+      a {
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+.theme-documents-accordion {
+  margin-bottom: $spacing-xl;
+
+  h2 {
+    font-size: $font-size-mdl;
+  }
+
+  .accordion {
+    .accordion-item {
+      border: none;
+
+      p {
+        font-family: $theme-font-family-base;
+        font-size: $font-size-sm;
+        font-weight: $theme-font-weight-bold;
+      }
+    }
+
+    .accordion-button {
+      border-bottom: 1px solid $aa-marble;
+      font-family: $theme-font-family-base;
+      font-size: $font-size-sm;
+      font-weight: $theme-font-weight-bold;
+      margin-top: $spacing-s;
+      padding: $spacing-m 0;
+
+      &::after {
+        width: 1.25rem;
+        height: 1.25rem;
+        background-size: 1.25rem;
+      }
+    }
+  }
+}

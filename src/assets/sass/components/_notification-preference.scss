@@ -1,0 +1,42 @@
+.theme-notification-preference {
+  color: $aa-black-blue;
+  line-height: $theme-line-height-md;
+  margin-bottom: $spacing-xl;
+  padding: 0;
+
+  input {
+    $input-dimension: 1.375rem;
+
+    width: $input-dimension;
+    height: $input-dimension;
+  }
+
+  &-row {
+    margin: 0;
+  }
+
+  &-entry-container, &-checkbox {
+    padding: 0;
+  }
+
+  .theme-title {
+    color: $aa-black-blue;
+    font-family: $theme-font-family-secondary;
+    font-size: $font-size-md;
+    font-weight: $theme-font-weight-bold;
+    letter-spacing: -0.02em;
+    line-height: $theme-line-height-md;
+    margin-bottom: $spacing-s;
+  }
+
+  .theme-copy {
+    color: $aa-black-blue;
+    font-size: $font-size-sm;
+    line-height: $theme-line-height-md;
+    max-width: 16.375rem;
+
+    @include media-breakpoint-up(md) {
+      max-width: 24.625rem;
+    }
+  }
+}

@@ -1,0 +1,141 @@
+.theme-global-footer-dashboard {
+  background: linear-gradient(180deg, $aa-dark-blue 0%, rgb(14 64 106 / 0%) 100%), $aa-black-blue;
+  color: $aa-white;
+  padding-bottom: $spacing-xl;
+  padding-top: $spacing-xl;
+
+  @include media-breakpoint-up(md) {
+    padding-bottom: $spacing-3xl;
+    padding-top: $spacing-3xl;
+  }
+
+  .footer-link {
+    color: $aa-white;
+    transition: 0.3s all;
+
+    &:hover {
+      color: $aa-light-blue;
+    }
+  }
+
+  &-icons {
+    margin-top: $spacing-xl;
+  }
+
+  &-link-widget {
+    margin-bottom: $spacing-m; // Required 32px bottom margin, calculating 16px from last li tag and applying 16 here i.e (16+16 = 32)
+
+    h5 {
+      border-bottom: 1px solid $aa-marble;
+      font-size: $font-size-mdl;
+      margin-bottom: $spacing-m;
+      padding-bottom: $spacing-s;
+    }
+
+    li {
+      margin-bottom: $spacing-m;
+
+      .widget-item-link {
+        font-size: $font-size-sm;
+        text-decoration: none;
+
+        @include media-breakpoint-up(md) {
+          font-size: $font-size-md;
+        }
+      }
+    }
+  }
+
+  &-privacy-links {
+    a,
+    .theme-btn-modal-link {
+      color: $aa-marble;
+      font-size: $font-size-sm;
+    }
+
+    .theme-btn-modal-link {
+      font-family: $theme-font-family-base;
+      font-weight: $theme-font-weight-light;
+      margin-right: $spacing-l;
+      padding: 0;
+
+      &:hover {
+        color: $aa-light-blue;
+      }
+    }
+
+    a {
+      font-size: $font-size-sm;
+      line-height: $theme-line-height-md;
+      margin-left: 0;
+      position: relative;
+      text-decoration: underline;
+
+      @include media-breakpoint-up(md) {
+        margin-left: $spacing-l;
+
+        &::before {
+          width: 1px;
+          height: 0.75rem;
+          background-color: $aa-white;
+          content: '';
+          left: (-$spacing-l); // Using spacing variable since position will be based upon spacing variable.
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+        }
+      }
+    }
+
+  }
+
+  &-social-links {
+    margin-bottom: $spacing-xl;
+
+    @include media-breakpoint-up(md) {
+      margin-bottom: 0;
+    }
+
+    li {
+      margin-right: $spacing-m;
+
+      &:last-child {
+        margin-right: 0;
+      }
+
+      a {
+        svg {
+          path {
+            transition: 0.3s all;
+          }
+        }
+
+        &:hover {
+          .theme-icon-pinterest {
+            path {
+              fill: $aa-light-blue;
+            }
+          }
+
+          svg:not(.theme-icon-pinterest) {
+            path {
+              stroke: $aa-light-blue;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &-copyright-details {
+    border-top: 1px solid $aa-marble;
+    margin-top: $spacing-l;
+    padding-top: $spacing-l;
+
+    p {
+      font-size: $font-size-sm;
+      margin-bottom: 0;
+      margin-top: $spacing-m;
+    }
+  }
+}

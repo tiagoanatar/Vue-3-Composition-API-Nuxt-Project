@@ -1,0 +1,33 @@
+.theme-account-details-menu {
+  &-heading {
+    @include media-breakpoint-down(md) {
+      font-size: $font-size-lg;
+    }
+  }
+
+  &-subheading {
+    font-size: $font-size-md;
+  }
+
+  &-list {
+    padding-left: 0;
+
+    .theme-key-value-text-label {
+      color: $aa-black-blue;
+      font-size: $font-size-md;
+      font-weight: $theme-font-weight-bold;
+    }
+
+    li {
+      a {
+        text-decoration: none;
+      }
+
+      &:last-child {
+        .theme-key-value-text-default {
+          border-bottom: none;
+        }
+      }
+    }
+  }
+}

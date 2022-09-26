@@ -1,0 +1,16 @@
+.theme-digital-wallet-add-debit-card-form {
+  @include media-breakpoint-up(md) {
+    margin-bottom: $spacing-5xl;
+  }
+
+  &-date-section {
+    @include media-breakpoint-up(md) {
+      display: flex;
+      justify-content: space-between;
+
+      .theme-input-wrapper {
+        width: 45%;
+      }
+    }
+  }
+}

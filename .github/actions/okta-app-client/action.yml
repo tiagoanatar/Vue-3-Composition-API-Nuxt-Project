@@ -1,0 +1,13 @@
+name: 'okta app client manager'
+description: 'manage okta app client app'
+inputs:
+  host:
+    description: host to add to cors
+  okta-api-token:
+    description: okta api token
+outputs:
+  okta-response:
+    description: api response
+runs:
+  using: 'node16'
+  main: 'dist/index.js'

@@ -1,0 +1,22 @@
+name: 'normalize branch name'
+description: 'extract and normalize branch from github context ref string attribute'
+outputs:
+  RELEASE_BRANCH: # id of output
+    description: 'normalized branch'
+  RELEASE_DEV_ENV_VERSION:
+    description: 'normalized release number to create istio host route'
+  DOCKER_TAG:
+    description: 'normalized release docker tag'
+  HELM_RELEASE_NAME:
+    description: 'normalized helm release name'
+  FE_REPOSITORY:
+    description: 'basic fe repo name'
+  FE_HOST_PREFIX:
+    description: 'fe host prefix'
+  CONTEXT_REF:
+    description: 'context ref'
+  DATA_GITHUB_HEAD_REF:
+    description: 'DATA_GITHUB_HEAD_REF'
+runs:
+  using: 'node16'
+  main: 'dist/index.js'

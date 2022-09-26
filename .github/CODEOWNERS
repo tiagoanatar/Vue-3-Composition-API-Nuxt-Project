@@ -1,0 +1,10 @@
+# Required lead or senior review on every PR + two team reviews
+*                  @pallen-pf @theresahead @ShashankaNataraj @drgibson @dpetry1 @trenita-dalmeida
+
+
+# Config Files - required lead or client reviews
+# includes .eslintrc.js .prettierrc.js .stylelintrc.js
+# *.js               @pallen-pf @drgibson 
+# .gitignore         @pallen-pf @drgibson
+# nuxt.config.ts     @pallen-pf @drgibson 
+package.json       @pallen-pf @drgibson

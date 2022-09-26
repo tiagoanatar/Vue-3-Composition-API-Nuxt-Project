@@ -1,0 +1,19 @@
+.theme-badge {
+  background-color: $aa-day-blue;
+  color: $black;
+  font-size: $font-size-xs;
+  font-weight: $theme-font-weight-light;
+
+  &-active {
+    @include badge-status-variations($aa-green-lighter, $aa-green);
+  }
+
+  &-processing,
+  &-review {
+    @include badge-status-variations($aa-goldenrod-lighter, $aa-goldenrod);
+  }
+
+  &-missing-docs {
+    @include badge-status-variations($aa-red-lighter, $aa-red);
+  }
+}

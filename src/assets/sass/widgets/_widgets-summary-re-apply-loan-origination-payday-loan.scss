@@ -1,0 +1,136 @@
+.theme-re-apply-loan-origination-summary {
+  &-card {
+    background-color: $aa-day-blue-light;
+    border: none;
+    border-radius: $theme-border-radius;
+
+    .theme-key-value-text-default {
+      .theme-key-value-text-label {
+        font-weight: $theme-font-weight-light;
+        margin-bottom: $spacing-xs;
+      }
+
+      .theme-key-value-text-value {
+        font-size: $font-size-sm;
+      }
+    }
+
+    &-header {
+      padding: $spacing-l 0 $spacing-m;
+
+      .theme-key-value-text-default {
+        .theme-key-value-text-label {
+          font-size: $font-size-xs;
+        }
+      }
+
+      .theme-key-value-text-heading {
+        .theme-key-value-text-label {
+          margin: 0;
+        }
+      }
+    }
+
+    &-loan-details {
+      border-top: 1px solid $aa-day-blue;
+
+
+      .theme-key-value-text-default {
+        margin-bottom: $spacing-s;
+
+        &:first-of-type {
+          padding-top: $spacing-m;
+        }
+      }
+    }
+
+    &-loan-amount-details {
+      .theme-key-value-text-default:last-of-type {
+        margin-bottom: 0;
+        padding-bottom: $spacing-m;
+      }
+    }
+
+    &-loan-charge-details {
+      .theme-key-value-text-default:last-of-type {
+        padding-bottom: $spacing-l;
+
+        .theme-key-value-text-label,
+        .theme-key-value-text-value {
+          font-size: $font-size-md;
+          font-weight: $theme-font-weight-bold;
+        }
+      }
+    }
+
+    &-footer-container {
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+      padding: $spacing-m 0;
+
+      &-policy-link {
+        @include link-primary-bold;
+
+        cursor: pointer;
+      }
+
+      &-icons-section {
+        span {
+          cursor: pointer;
+
+          &:first-of-type {
+            margin-right: $spacing-l;
+          }
+        }
+      }
+    }
+
+    // Overrides for base card styles
+    .card-header,
+    .card-body {
+      // This is to override the default background coming from the component
+      background: transparent;
+      border: none;
+      padding: 0 $spacing-m;
+
+      @include media-breakpoint-up(md) {
+        background: $aa-white;
+      }
+    }
+
+    .card-footer {
+      background: $aa-day-blue;
+      border: none;
+    }
+
+    .card-title,
+    .card-text {
+      display: none;
+    }
+  }
+
+  .theme-re-apply-loan-origination-summary-form-container {
+    @include media-breakpoint-down(md) {
+      .theme-loan-origination-summary-form {
+        padding: $spacing-xl $spacing-m $spacing-m;
+      }
+    }
+  }
+
+  .theme-loan-origination-summary-input-agreement {
+    span {
+      &:first-of-type {
+        &::after {
+          content: ' ';
+        }
+      }
+
+      &:last-of-type {
+        &::before {
+          content: ' ';
+        }
+      }
+    }
+  }
+}

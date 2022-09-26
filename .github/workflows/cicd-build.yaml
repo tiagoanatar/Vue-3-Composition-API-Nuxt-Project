@@ -1,0 +1,184 @@
+---
+name: Build Pipeline
+
+on:
+  push:
+    branches: [develop]
+
+env:
+  ECR_REGISTRY: 839533991848.dkr.ecr.us-east-1.amazonaws.com
+
+jobs:
+  build:
+    name: Build and Publish
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v2
+
+      - name: normalize data
+        uses: ./.github/actions/per-branch-env-action # Uses an action in the root directory
+        id: data
+
+      - name: configure aws credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+
+      - name: get state repo
+        uses: actions/checkout@master
+        with:
+          repository: teampurpose/cicd-products-services-state
+          ref: dev
+          path: ./deploy-charts
+          token: ${{ secrets.STATE_PAT}}
+
+      - name: login to amazon ecr
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      ##########################
+      # create the repo if it is needed #
+      ##########################
+      - name: Prep ECR repository
+        id: ecr-verify-created
+        uses: teampurpose/create-ecr-repository-action@v1.0.0
+        with:
+          repository: ${{steps.data.outputs.FE_REPOSITORY}}
+          lifecycle-policy: deploy-charts/ecr.lifecycle.json
+          repo-policy: deploy-charts/ecr.repo-policy.json
+          deleteRepo: false # needs to default
+
+      - name: build docker image
+        run: docker build -t ${ECR_REGISTRY}/${GITHUB_REPOSITORY}:${{steps.data.outputs.DOCKER_TAG}} -f Dockerfile-prod .
+
+      - name: push docker images
+        run: docker image push ${ECR_REGISTRY}/${GITHUB_REPOSITORY}:${{steps.data.outputs.DOCKER_TAG}}
+
+  deploy:
+    name: Deploy to Dev
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: normalize data
+        uses: ./.github/actions/per-branch-env-action # Uses an action in the root directory
+        id: data
+
+      - name: update host name
+        run: |
+          cd ./helm
+          sed -i 's/HOST/${{ steps.data.outputs.FE_HOST_PREFIX }}/g' values.yaml
+          sed -i 's/PM2_CONFIG/${{ steps.data.outputs.HELM_RELEASE_NAME }}-pm2-config-and-env-vars/g' values.yaml
+          sed -i 's/TAG/${{ steps.data.outputs.DOCKER_TAG }}/g' values.yaml
+
+      - name: get state repo
+        uses: actions/checkout@master
+        with:
+          repository: teampurpose/cicd-products-services-state
+          ref: dev
+          path: ./deploy-charts
+          token: ${{ secrets.STATE_PAT}}
+
+      - name: update deployment tag in state
+        run: |
+          cd ./deploy-charts  
+          pip install ruamel.yaml parse schema
+          ./release-helm "${{ steps.data.outputs.HELM_RELEASE_NAME }}" -fe "${GITHUB_REPOSITORY}"
+
+      - name: Deploy to qa with update to qa state
+        uses: EndBug/add-and-commit@v7
+        with:
+          cwd: ./deploy-charts
+          author_name: Actions Pipeline
+          author_email: systemsupport@teampurpose.com
+          message: 'release to dev'
+          add: 'services'
+          pull_strategy: NO-PULL
+          branch: dev
+          push: origin dev --force
+
+  lint:
+    uses: ./.github/workflows/linter.yaml
+
+  code-quality:
+    uses: ./.github/workflows/codeql-js.yaml
+
+  deployqa:
+    name: Deploy to QA
+    needs: [build, code-quality, lint]
+    runs-on: ubuntu-latest
+    environment:
+      name: qa
+    steps:
+      - uses: actions/checkout@v2
+        # checks out the repo in preparation for build
+
+      - name: normalize data
+        uses: ./.github/actions/per-branch-env-action # Uses an action in the root directory
+        id: data
+
+      - name: update host name
+        run: |
+          cd ./helm
+          sed -i 's/HOST/${{ steps.data.outputs.FE_HOST_PREFIX }}/g' values.yaml
+          sed -i 's/PM2_CONFIG/${{ steps.data.outputs.HELM_RELEASE_NAME }}-pm2-config-and-env-vars/g' values.yaml
+          sed -i 's/TAG/${{ steps.data.outputs.DOCKER_TAG }}/g' values.yaml
+
+      - name: get state repo
+        uses: actions/checkout@master
+        with:
+          repository: teampurpose/cicd-products-services-state
+          ref: qa
+          path: ./deploy-charts
+          token: ${{ secrets.STATE_PAT}}
+
+      - name: update deployment tag in state
+        # release-helm is the script that updates the helm chart with the version just built
+        run: |
+          cd ./deploy-charts
+          pip install ruamel.yaml parse schema
+          ./release-helm "${{ steps.data.outputs.HELM_RELEASE_NAME }}" -fe "${GITHUB_REPOSITORY}"
+
+      - name: Deploy to qa with update to qa state
+        # deploy is as easy as updating state branches.  the rancher CD watches for state changes and implements the versions desired.
+        uses: EndBug/add-and-commit@v7
+        with:
+          cwd: ./deploy-charts
+          author_name: Actions Pipeline
+          author_email: systemsupport@teampurpose.com
+          message: 'release to qa'
+          add: 'services'
+          pull_strategy: NO-PULL
+          branch: qa
+          push: origin qa --force
+
+  approverelease:
+    name: QA Test Signoff
+    needs: deployqa
+    runs-on: ubuntu-latest
+    environment:
+      name: qatested
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.STATE_PAT}} # checkout as ss so it triggers the later stages
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.ref }}
+
+      - name: Merge to release
+        run: |
+          git config --local user.email "systemsupport@teampurpose.com"
+          git config --local user.name "Actions Pipeline"    
+          git fetch --unshallow
+          git checkout release
+          git pull
+          git merge --no-ff $GITHUB_SHA -m "QA approved"
+          mkdir ./target/
+          echo $GITHUB_SHA > ./target/image
+          git add ./target/image -f
+          git commit -am 'QA approved'
+          git push

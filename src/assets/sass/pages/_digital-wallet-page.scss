@@ -1,0 +1,56 @@
+.theme-digital-wallet {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+
+  .theme-global-application-header {
+    margin-bottom: $spacing-4xl;
+
+    @include media-breakpoint-down(md) {
+      margin-bottom: $spacing-xxl;
+    }
+  }
+
+  @include media-breakpoint-up(md) {
+    min-height: 44.5rem;
+  }
+
+  @include media-breakpoint-down(md) {
+    .navbar-brand {
+      display: none;
+    }
+  }
+
+  &-description {
+    margin-bottom: $spacing-xl;
+
+    h1 {
+      margin-bottom: $spacing-l;
+    }
+
+    p {
+      font-size: $font-size-md;
+    }
+  }
+
+  &-listing-section {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+
+    &-cards {
+      .theme-payment-method-card {
+        margin-bottom: $spacing-l;
+      }
+    }
+
+    &-add-label {
+      @include link-primary;
+
+      color: $aa-dark-blue;
+      font-size: $font-size-sm;
+      font-weight: $theme-font-weight-bold;
+    }
+  }
+}
